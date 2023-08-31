@@ -117,10 +117,14 @@ class MainWindow(BaseWindow):
 
     def closeEvent(self, event):
         LOGGER.debug(f"{self.__class__.__name__}.closeEvent()")
-        reply = QtWidgets.QMessageBox.question(self, 'Confirmation',
-                                               "Êtes-vous sûr de vouloir quitter ?", QtWidgets.QMessageBox.Yes |
-                                               QtWidgets.QMessageBox.No, QtWidgets.QMessageBox.No)
-        if reply == QtWidgets.QMessageBox.Yes:
+        msg_box = QtWidgets.QMessageBox(self)
+        msg_box.setIcon(QtWidgets.QMessageBox.Question)
+        msg_box.setWindowTitle("Confirmation")
+        msg_box.setText("Êtes-vous sûr de vouloir quitter ?")
+        msg_box.addButton("Oui", QtWidgets.QMessageBox.YesRole)
+        msg_box.addButton("Non", QtWidgets.QMessageBox.NoRole)
+        reply = msg_box.exec_()
+        if reply == 0:
             QtWidgets.QApplication.quit()
         else:
             event.ignore()

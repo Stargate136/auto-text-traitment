@@ -66,6 +66,7 @@ class ChatBotPage(BaseWindow):
         self.scroll_area = QtWidgets.QScrollArea()
         self.scroll_content = QtWidgets.QWidget(self.scroll_area)
         self.scroll_layout = QtWidgets.QVBoxLayout(self.scroll_content)
+        self.scroll_layout.addStretch()
 
         self.scroll_content.setLayout(self.scroll_layout)
         self.scroll_area.setWidget(self.scroll_content)
@@ -106,10 +107,10 @@ class ChatBotPage(BaseWindow):
         lbl_question = CustomLabel(question)
         lbl_chatbot = CustomLabel("CHATBOT :")
         lbl_answer = CustomLabel(answer)
-
         line = QtWidgets.QFrame()
         line.setFrameShape(QtWidgets.QFrame.HLine)
         line.setFrameShadow(QtWidgets.QFrame.Sunken)
+        line.setObjectName("customSeparator")
 
         labels_layout = QtWidgets.QVBoxLayout()
 
@@ -119,8 +120,7 @@ class ChatBotPage(BaseWindow):
         labels_layout.addWidget(lbl_answer)
         labels_layout.addWidget(line)
 
-        self.scroll_layout.addLayout(labels_layout)
-        self.scroll_layout.addStretch()
+        self.scroll_layout.insertLayout(self.scroll_layout.count() - 1, labels_layout)
 
         self.le_question.clear()
 

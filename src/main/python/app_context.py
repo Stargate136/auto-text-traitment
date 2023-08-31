@@ -12,5 +12,6 @@ class AppContext(ApplicationContext):
         with open(style_sheet, "r") as f:
             self.app.setStyleSheet(f.read())
         window = MainWindow()
+        window.resize(250, 150)
         window.show()
         return self.app.exec_()  # 0 if closing the app went well, 1 otherwise
