@@ -1,5 +1,6 @@
 import logging
 
+import requests
 from PySide2 import QtWidgets, QtCore
 
 from gui.abstract import BaseWindow
@@ -67,7 +68,7 @@ class MainWindow(BaseWindow):
 
     def __init__(self):
         super().__init__()
-        self.work_window = WorkWindow()
+        self.work_window = None
 
     def create_widgets(self):
         LOGGER.debug(f"{self.__class__.__name__}.create_widgets()")
@@ -105,15 +106,13 @@ class MainWindow(BaseWindow):
         if file_dialog.exec_() == QtWidgets.QDialog.Accepted:
             path = file_dialog.selectedUrls()[0].toLocalFile()
             reader = FileReader(path)
-            self.work_window = WorkWindow(reader.extract_text())
-            self.work_window.show()
+            self.open_work_window(reader.extract_text())
 
     def copy_past(self):
         LOGGER.debug(f"{self.__class__.__name__}.copy_past()")
         dialog = CopyPastDialog()
         if dialog.exec_() == QtWidgets.QDialog.Accepted:
-            self.work_window = WorkWindow(dialog.get_text())
-            self.work_window.show()
+            self.open_work_window(dialog.get_text())
 
     def closeEvent(self, event):
         LOGGER.debug(f"{self.__class__.__name__}.closeEvent()")
@@ -128,3 +127,10 @@ class MainWindow(BaseWindow):
             QtWidgets.QApplication.quit()
         else:
             event.ignore()
+
+    def open_work_window(self, text):
+        try:
+            self.work_window = WorkWindow(text)
+            self.work_window.show()
+        except requests.exceptions.ConnectionError:
+            QtWidgets.QMessageBox.critical(None, "Erreur", "Impossible de se connecter au serveur.")
