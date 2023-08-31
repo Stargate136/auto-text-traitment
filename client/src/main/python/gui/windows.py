@@ -5,7 +5,7 @@ from PySide2 import QtWidgets, QtCore
 from gui.abstract import BaseWindow
 from gui.pages import CopyPastPage, TextPage, SummaryPage, ChatBotPage
 
-from core import FileReader, ModelsManager
+from core import FileReader, ModelsManagerAPI
 
 
 LOGGER = logging.getLogger(__name__)
@@ -26,7 +26,7 @@ class CopyPastDialog(QtWidgets.QDialog):
 class WorkWindow(BaseWindow):
     def __init__(self, text=""):
         self.text = text
-        self.models_manager = ModelsManager(text)
+        self.models_manager = ModelsManagerAPI(text)
         super().__init__()
 
     def create_widgets(self):

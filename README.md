@@ -5,7 +5,8 @@ A desktop app using PySide2
 You can upload a file (.txt, .pdf, .docx) and have a summary and a chatbot who answers at your questions on the document
 
 # Important
-- Use Python 3.6
+- Use Python 3.6 for client
+- Use Python 3.11 for server
 
 # TODO
 ## Backend
